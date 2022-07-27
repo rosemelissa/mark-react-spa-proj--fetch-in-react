@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Dog from './Dog';
 
 interface Joke {
   id: number;
@@ -10,19 +11,19 @@ interface Joke {
 function App() {
   const [joke, setJoke] = useState<Joke>();
 
-  const handleGetJoke = async () => {
-    const response = await fetch(
-      "https://jokestemp.neillbogie.repl.co/jokes/general/random"
-    );
-    const jsonBody: Joke[] = await response.json();
-    setJoke(jsonBody[0]);
-  };
-
-  // const handleGetJoke = () => {
-  //   fetch("https://jokestemp.neillbogie.repl.co/jokes/general/random")
-  //     .then((response) => response.json())
-  //     .then((jsonBody: Joke[]) => setJoke(jsonBody[0]));
+  // const handleGetJoke = async () => {
+  //   const response = await fetch(
+  //     "https://jokestemp.neillbogie.repl.co/jokes/general/random"
+  //   );
+  //   const jsonBody: Joke[] = await response.json();
+  //   setJoke(jsonBody[0]);
   // };
+
+  const handleGetJoke = () => {
+    fetch("https://jokestemp.neillbogie.repl.co/jokes/general/random")
+      .then((response) => response.json())
+      .then((jsonBody: Joke[]) => setJoke(jsonBody[0]));
+  };
 
   if (joke) {
     return (
@@ -34,6 +35,7 @@ function App() {
         </details>
         <hr />
         <button onClick={handleGetJoke}>Get another joke</button>
+        <Dog />
       </div>
     );
   } else {
@@ -45,6 +47,7 @@ function App() {
           joke from an API!
         </p>
         <button onClick={handleGetJoke}>Get joke</button>
+        <Dog />
       </div>
     );
   }
