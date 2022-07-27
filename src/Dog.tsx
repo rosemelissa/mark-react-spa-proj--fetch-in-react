@@ -7,25 +7,25 @@ interface DogAPI {
 
 
 function Dog() : JSX.Element {
-    const [dog, setDog] = useState<DogAPI>();
+    const [dogs, setDogs] = useState<DogAPI[]>([]);
 
-    // const handleGetDog = async () => {
+    // const handleGetDogs = async () => {
     //     const response = await fetch("https://dog.ceo/api/breed/hound/images/random");
     //     const jsonBody: DogAPI = await response.json();
-    //     setDog(jsonBody)
+    //     setDogs([...dogs, jsonBody])
     // }
 
-    const handleGetDog = () => {
+    const handleGetDogs = () => {
         fetch("https://dog.ceo/api/breed/labrador/images/random")
         .then(response => response.json())
-        .then((jsonBody: DogAPI) => setDog(jsonBody))
+        .then((jsonBody: DogAPI) => setDogs([...dogs, jsonBody]))
     }
 
     return (
         <>
             <h1>Dog</h1>
-            {(dog) && <img src={dog.message} alt='Dog'/>}
-            <button type='button' onClick={handleGetDog}>Get Dog</button>
+            {(dogs) && dogs.map(dog => <img src={dog.message} alt='Dog'/>)}
+            <button type='button' onClick={handleGetDogs}>Get Dog</button>
         </>
     )
 }
